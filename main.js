@@ -7,10 +7,18 @@ class Block { // block tanımlamaları yapıldı
         this.timestamp = timestamp;
         this.data = data;
         this.hash = this.calculateHash();
+        this.nonce=0;
     }
 
     calculateHash() {
-        return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString();
+        return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)+this.nonce).toString();
+    }
+    mineBlock(difficulty){
+        while(this.hash.substring(0,difficulty)!==Array(difficulty+1).join("0")){
+            this.nonce++;
+            this.hash=this.calculateHash();
+        }
+        console.log("Block mined:")
     }
 }
 
@@ -18,6 +26,7 @@ class Block { // block tanımlamaları yapıldı
 class Blockchain { 
     constructor() {
         this.chain = [this.createGenesisBlock()];
+        this.difficulty=5;
     }
 
     createGenesisBlock() {
@@ -30,7 +39,7 @@ class Blockchain {
 
     addBlock(newBlock) {
         newBlock.previousHash = this.getLatestBlock().hash;
-        newBlock.hash = newBlock.calculateHash();
+        newBlock.mineBlock(this.difficulty);
         this.chain.push(newBlock);
     }
     isChainValid() {
@@ -49,8 +58,11 @@ class Blockchain {
     }
 }
 let RecycleCoin = new Blockchain();
+console.log('Mining Block 1....');
 RecycleCoin.addBlock(new Block(1, "10/08/2022", { amount: 4 }));
+console.log('Mining Block 2....');
 RecycleCoin.addBlock(new Block(2, "10/09/2022", { amount: 9 }));
+console.log('Mining Block 3....');
 RecycleCoin.addBlock(new Block(3, "10/10/2022", { amount: 40 }));
 console.log(JSON.stringify(RecycleCoin, null, 4));
 console.log('Is blockchain valid? '+RecycleCoin.isChainValid());
