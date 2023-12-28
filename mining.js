@@ -1,14 +1,24 @@
-const {Blockchain, Transaction}= require('./blockchain');
+const { Blockchain } = require('./src/blockchain');
 const readline = require('readline');
+const EC = require('elliptic').ec;
+const ec = new EC('secp256k1');
 const RecycleCoin = new Blockchain();
-RecycleCoin.pullChain();
-const rl = readline.createInterface(process.stdin, process.stdout);
-// question metodu ile yaş hesaplama
 
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
-rl.question('Mining Yapmak için SHA256 adresinizi giriniz : ', function(userShaAdress) {
- 
-    RecycleCoin.minePendingTransactions(userShaAdress);
+rl.question('Enter your wallet address to mine: ', function(userPrivateKey) {
+  const userKey = ec.keyFromPrivate(userPrivateKey);
 
-    rl.close();
+// From that we can calculate your public key (which doubles as your wallet address)
+ const userWalletAddress = userKey.getPublic('hex');
+  RecycleCoin.minePendingTransactions(userPrivateKey);
+  rl.close();
+});
+
+// You can listen for the close event if needed
+rl.on('close', function() {
+  console.log('Mining operation completed.');
 });

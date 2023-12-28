@@ -1,0 +1,16 @@
+{
+    "status": 200,
+    "message": "Success",
+    "data": {
+        "publicKey": "04aa372b19f2566086923430298ddbb76142f7a538ed8608d75f37261ff17f1d342d2513994693337a2bb1b678e8a0b2cb4238697186cd50fbb0cbac30da48b4ef",
+        "privateKey": "33f120bcad9bf94c8db8d81bcfc1cfc9945d2ad4c2a103961cafb6ebf105856b"
+    }
+},
+{
+    "status": 200,
+    "message": "Success",
+    "data": {
+        "publicKey": "049cd5e29c8145dedb384c2a57716544c484b62ea0a4dfd5ea99669d49c110ed9acaaa2ace96fb0ab04fdb505c81453a931454f3b2e4a50dcd2e38748ea0290b4c",
+        "privateKey": "c517144ccae01a4c66f50bfb08696c404a0f52b16a76321aca45bfa8f44bc75b"
+    }
+}
