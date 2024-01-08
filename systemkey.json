@@ -1,0 +1,8 @@
+{
+    "status": 200,
+    "message": "Success",
+    "data": {
+        "publicKey": "04a4b007d98cc8e8bde1f7bf4c36b98a63f09301fe151e814327595c0663532bb39960521309271608f3cc5d318d699df4cffbf7a04a7b7d434426ed9d61cf4b84",
+        "privateKey": "a3fb7b0eb79d30e877367e6b741c9c208980b0b43264f0d4ec732a062fce88dc"
+    }
+}

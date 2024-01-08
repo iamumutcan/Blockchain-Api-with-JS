@@ -2,23 +2,34 @@ const { Blockchain } = require('./src/blockchain');
 const readline = require('readline');
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
-const RecycleCoin = new Blockchain();
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-rl.question('Enter your wallet address to mine: ', function(userPrivateKey) {
+function startMining(userPrivateKey) {
   const userKey = ec.keyFromPrivate(userPrivateKey);
+  const RecycleCoin = new Blockchain();
 
-// From that we can calculate your public key (which doubles as your wallet address)
- const userWalletAddress = userKey.getPublic('hex');
+  const userWalletAddress = userKey.getPublic('hex');
   RecycleCoin.minePendingTransactions(userPrivateKey);
-  rl.close();
+
+  rl.question('Continue mining? (y/n): ', function(answer) {
+    if (answer.toLowerCase() === 'y') {
+      startMining(userPrivateKey); // Devam et
+    } else {
+      console.log('Mining operation completed.');
+      rl.close();
+    }
+  });
+}
+
+rl.question('Enter your wallet address to mine: ', function(userPrivateKey) {
+  startMining(userPrivateKey);
 });
 
-// You can listen for the close event if needed
+// Gerekirse close olayını dinleyebilirsin
 rl.on('close', function() {
   console.log('Mining operation completed.');
 });

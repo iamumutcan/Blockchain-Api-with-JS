@@ -6,9 +6,10 @@ const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 const {Blockchain, Transaction}= require('../src/blockchain');
 
-const RecycleCoin = new Blockchain();
 
 const postCreateKeys=(req, res, next) => {
+    const RecycleCoin = new Blockchain();
+
   try {
       const key = ec.genKeyPair();
       const publicKey = key.getPublic('hex');
@@ -37,6 +38,8 @@ const postCreateKeys=(req, res, next) => {
 };
 
 const postwalletBalance = (req, res, next) => {
+    const RecycleCoin = new Blockchain();
+
     var WalletAddress = req.body.walletAddress;
     var balanceAmount = RecycleCoin.getBalanceOfAddress(WalletAddress);
     var response = {
@@ -50,6 +53,8 @@ const postwalletBalance = (req, res, next) => {
 };
 
 const postAddpendingTransactions = (req, res, next) => {
+    const RecycleCoin = new Blockchain();
+
     try {
         const toAddress = req.body.toAddress;
         const fromAddressKey = ec.keyFromPrivate(req.body.fromAddress);
@@ -107,6 +112,8 @@ const postAddpendingTransactions = (req, res, next) => {
 
 
 const getAllBlockchain=(req,res)=>{ 
+    const RecycleCoin = new Blockchain();
+
     try {
         const RecycleCoin = new Blockchain();
         res.status(200).json(RecycleCoin);
